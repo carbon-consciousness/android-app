@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_footprint">
+
+    <fragment
+        android:id="@+id/nav_footprint"
+        android:name="com.carbonconciousness.app.ui.footprint.FootprintFragment"
+        android:label="@string/menu_footprint"
+        tools:layout="@layout/fragment_footprint" />
+
+    <fragment
+        android:id="@+id/nav_forest"
+        android:name="com.carbonconciousness.app.ui.forest.ForestFragment"
+        android:label="@string/menu_forest"
+        tools:layout="@layout/fragment_footprint" />
+
+    <fragment
+        android:id="@+id/nav_statistics"
+        android:name="com.carbonconciousness.app.ui.statistics.StatisticsFragment"
+        android:label="@string/menu_statistics"
+        tools:layout="@layout/fragment_footprint" />
+</navigation>
