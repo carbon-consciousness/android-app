@@ -1,6 +1,5 @@
 package com.carbonconciousness.app.networking
 
-import android.view.Display
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

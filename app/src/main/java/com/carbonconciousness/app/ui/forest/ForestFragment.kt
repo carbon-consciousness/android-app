@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.carbonconciousness.app.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_forest.*
 import kotlinx.android.synthetic.main.tree_entry.view.*
 import java.util.*
@@ -66,7 +67,8 @@ class TreeAdapter(var context: Context, var treeList: ArrayList<Tree>) : BaseAda
 
         val inflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val treeView = inflator.inflate(R.layout.tree_entry, null)
-        treeView.imgTree.setImageResource(tree.image!!)
+
+        Picasso.get().load(tree.image!!).into(treeView.imgTree)
         treeView.tvName.text = tree.name
 
         return treeView
