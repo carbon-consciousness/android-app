@@ -29,22 +29,9 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class MainActivity : AppCompatActivity(), SensorEventListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
-
-    // Number of seconds between each poll
-    private val POLL_TICK: Long = 30
-    private val DEMO_TICK: Long = 5
-    // API Services
-    private val apiService by lazy { ApiService.create() }
-    private var disposables: CompositeDisposable = CompositeDisposable()
-
-    // Step counters
-    private var currentStepCount: Float? = 0f
-    private var currentStepGoal: Float = 10000f
-    private lateinit var sensorManager: SensorManager
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,71 +67,5 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
-    override fun onResume() {
-        super.onResume()
-
-        // Start polling server for status
-        disposables.add(Observable.interval(0, POLL_TICK, TimeUnit.SECONDS)
-            .flatMap { tick -> apiService.status().subscribeOn(Schedulers.io()) }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result -> updateStepCounter(currentStepCount, result.step_counter) },
-                { error -> showError(error.message) }))
-
-        // Start polling the server for demo data
-        disposables.add(Observable.interval(0, DEMO_TICK, TimeUnit.SECONDS)
-            .flatMap { tick -> apiService.demo_data().subscribeOn(Schedulers.io()) }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result ->  updateFootprint(result) },
-                { error -> showError(error.message) })
-        )
-
-        // Poll podometer (for UI bizness)
-        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        var stepsSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
-        if (stepsSensor == null) {
-            Toast.makeText(this, "No Steps Counter available :(", Toast.LENGTH_SHORT).show()
-        } else {
-            sensorManager?.registerListener(this, stepsSensor, SensorManager.SENSOR_DELAY_UI)
-        }
-
-        // Stop the background pedometer service
-        val intent = Intent(this, PedometerService::class.java)
-        stopService(intent)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        disposables.dispose()
-        sensorManager?.unregisterListener(this)
-
-        // Launch the podometer service to monitor the user's steps even when not in the app
-        val intent = Intent(this, PedometerService::class.java)
-        startService(intent)
-    }
-
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
-
-    }
-
-    override fun onSensorChanged(event: SensorEvent?) {
-        updateStepCounter(event?.values?.get(0), currentStepGoal)
-    }
-
-    private fun updateStepCounter(newStepCount: Float?, newStepGoal: Float ) {
-        /*
-        currentStepCount = newStepCount
-        currentStepGoal = newStepGoal
-        text_view_step_count.text = getString(R.string.step_count, currentStepCount, currentStepGoal)
-        val copy = currentStepCount
-        if (copy != null) pedometer_percentage.setCompletedPerentage(copy / currentStepGoal)
-        */
-    }
-
-    private fun updateFootprint(result: Model.DemoResult) {
-
-    }
-
-    private fun showError(error: String?) = Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
 
 }

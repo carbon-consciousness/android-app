@@ -14,7 +14,7 @@ interface ApiService {
     fun status(): Observable<Model.Result>
 
     @GET("/demo_carbon_footprint")
-    fun demo_data(): Observable<Model.DemoResult>
+    fun demo_data(): Observable<List<Model.Result>>
 
     companion object {
         fun create() : ApiService {
@@ -38,6 +38,5 @@ interface ApiService {
 }
 
 object Model {
-    data class Result(val step_counter: Float, val carbon_footprint: Float)
-    data class DemoResult(val step_counter: Float, val carbon_footprint: Float)
+    data class Result(val step_counter: Float, val carbon_footprint: Float, val delta: Int)
 }
