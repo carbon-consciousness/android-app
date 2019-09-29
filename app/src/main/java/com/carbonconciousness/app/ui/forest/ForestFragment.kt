@@ -40,6 +40,11 @@ class ForestFragment : Fragment() {
         return root
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
 }
 
 class TreeAdapter(var context: Context, var treeList: ArrayList<Tree>) : BaseAdapter() {
