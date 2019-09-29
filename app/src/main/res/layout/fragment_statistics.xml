@@ -16,8 +16,6 @@
                 android:id="@+id/lineChart"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:padding="@dimen/activity_vertical_margin"
                 android:orientation="vertical"
                 app:chart_padding_bottom="35dp"
                 app:chart_padding_left="20dp"
@@ -30,14 +28,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/lineChart"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:gravity="center"
                 android:textSize="20sp"
-                android:layout_margin="@dimen/activity_vertical_margin"
                 android:textColor="@color/colorPrimaryDark"
-                android:text="ajékajéfkj" />
+                android:text="Carbon footprint over the past 2 weeks" />
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph_view"
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barchart"
             android:layout_width="match_parent"
-            android:layout_height="250dp" />
-        </LinearLayout>
+            android:layout_height="250dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lineChart"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:text="Number of steps taken over the past weeks" />
+
+    </LinearLayout>
 </LinearLayout>

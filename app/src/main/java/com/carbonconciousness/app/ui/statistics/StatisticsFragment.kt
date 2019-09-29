@@ -13,6 +13,10 @@ import androidx.lifecycle.ViewModelProviders
 import com.carbonconciousness.app.R
 import com.carbonconciousness.app.networking.ApiService
 import com.carbonconciousness.app.networking.Model
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -63,12 +67,18 @@ class StatisticsFragment : Fragment() {
         lineChart.setList(list)
 
         // Draw number of steps taken
-        var stepData = ArrayList<DataPoint>()
-        var j = 1.0
+        var j = 0
+        var abcisse = ArrayList<String>()
+        var barEntries = ArrayList<BarEntry>()
         for (elem in statData) {
-            stepData.add(DataPoint(j++, elem.step_counter.toDouble()))
+            barEntries.add(BarEntry(elem.step_counter, j.toFloat()))
+            abcisse.add(j.toString())
+            j++
         }
-        var series = BarGraphSeries<DataPoint>(stepData.toTypedArray())
-        graph_view.addSeries(series)
+        var bardataset = BarDataSet(barEntries, "Step Count")
+        barchart.animateY(1)
+        var bardata = BarData(bardataset)
+        bardataset.colors = ColorTemplate.COLORFUL_COLORS.toList()
+        barchart.data = bardata
     }
 }
