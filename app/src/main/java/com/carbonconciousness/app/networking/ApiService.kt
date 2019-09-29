@@ -1,5 +1,6 @@
 package com.carbonconciousness.app.networking
 
+import android.view.Display
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -15,6 +16,9 @@ interface ApiService {
 
     @GET("/demo2_carbon_footprint")
     fun demo_data(): Observable<Model.Result>
+
+    @GET("/demo_carbon_footprint")
+    fun stat_data(): Observable<List<Model.Result>>
 
     companion object {
         fun create() : ApiService {
