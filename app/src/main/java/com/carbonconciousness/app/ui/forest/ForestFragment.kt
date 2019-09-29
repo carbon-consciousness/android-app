@@ -12,20 +12,12 @@ import com.carbonconciousness.app.R
 
 class ForestFragment : Fragment() {
 
-    private lateinit var forestViewModel: ForestViewModel
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        forestViewModel =
-                ViewModelProviders.of(this).get(ForestViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_forest, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
-        forestViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
         return root
     }
 }
