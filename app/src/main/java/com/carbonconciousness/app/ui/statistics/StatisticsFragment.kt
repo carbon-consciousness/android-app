@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.carbonconciousness.app.R
 import com.carbonconciousness.app.networking.ApiService
 import com.carbonconciousness.app.networking.Model
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.*
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
@@ -51,34 +51,37 @@ class StatisticsFragment : Fragment() {
     }
 
     private fun drawStatisticalData(statData: List<Model.Result>) {
-        // Draw the carbon footprint
-        var data = ArrayList<Float>()
-        var legend = ArrayList<String>()
-        var i = 1
-        for (elem in statData) {
-            data.add(elem.carbon_footprint)
-            legend.add(i.toString())
-            i++
-        }
-        val chartEntity = ChartEntity (context?.getColor(R.color.colorPrimary)!!, data.toFloatArray())
-        val list = ArrayList<ChartEntity>()
-        list.add(chartEntity)
-        lineChart.legendArray = legend.toTypedArray()
-        lineChart.setList(list)
-
-        // Draw number of steps taken
-        var j = 0
-        var abcisse = ArrayList<String>()
+        // Draw the carbon footprint and the steps taken
+        var i = 0
+        var lineEntries = ArrayList<Entry>()
         var barEntries = ArrayList<BarEntry>()
         for (elem in statData) {
-            barEntries.add(BarEntry(elem.step_counter, j.toFloat()))
-            abcisse.add(j.toString())
-            j++
+            lineEntries.add(Entry(i.toFloat(), elem.carbon_footprint, i.toString()))
+            barEntries.add(BarEntry(i.toFloat(), elem.step_counter, i.toString()))
+            i++
         }
+
+        val animationDuration = 2000
+
+        // Line Chart
+        var lineDataSet = LineDataSet(lineEntries, "Carbon Footprint")
+        var lineData = LineData(lineDataSet)
+        lineDataSet.colors = listOf(context!!.getColor(R.color.colorPrimary))
+        lineDataSet.lineWidth = 5f
+        lineDataSet.setDrawCircleHole(true)
+        lineDataSet.circleColors = listOf(context!!.getColor(R.color.colorPrimary))
+        lineChart.animateX(animationDuration)
+        lineChart.data = lineData
+        lineChart.setPinchZoom(true)
+
+
+        // Bar Chart
         var bardataset = BarDataSet(barEntries, "Step Count")
-        barchart.animateY(1)
         var bardata = BarData(bardataset)
-        bardataset.colors = ColorTemplate.COLORFUL_COLORS.toList()
-        barchart.data = bardata
+        bardataset.colors = listOf(context!!.getColor(R.color.colorPrimary))
+        barChart.animateXY(animationDuration, animationDuration)
+        barChart.data = bardata
+        barChart.setPinchZoom(true)
     }
+
 }

@@ -12,17 +12,10 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
-            <ir.farshid_roohi.linegraph.LineChart
+            <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/lineChart"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:orientation="vertical"
-                app:chart_padding_bottom="35dp"
-                app:chart_padding_left="20dp"
-                app:chart_padding_right="20dp"
-                app:chart_padding_top="20dp"
-                app:chart_line_color="@android:color/darker_gray"
-                app:chart_bg_color="@android:color/transparent" />
+                android:layout_height="250dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -35,7 +28,7 @@
                 android:text="Carbon footprint over the past 2 weeks" />
 
         <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barchart"
+            android:id="@+id/barChart"
             android:layout_width="match_parent"
             android:layout_height="250dp"/>
 
