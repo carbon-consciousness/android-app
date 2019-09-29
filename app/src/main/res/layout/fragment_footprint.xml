@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/cactus_4"
+        android:src="@drawable/cactus_1"
         android:padding="110dp" />
 
     <com.carbonconciousness.app.view.SpeedometerView

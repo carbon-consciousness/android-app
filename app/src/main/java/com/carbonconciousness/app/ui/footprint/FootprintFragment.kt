@@ -25,7 +25,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_footprint.*
+import java.lang.Integer.max
 import java.util.concurrent.TimeUnit
+import kotlin.math.min
 
 class FootprintFragment : Fragment(), SensorEventListener {
 
@@ -42,7 +44,8 @@ class FootprintFragment : Fragment(), SensorEventListener {
     private var currentStepGoal: Float = 10000f
     private lateinit var sensorManager: SensorManager
 
-
+    // Tree counter (starts at cactus_1 -> idx 2). Normally this data would be stored on the server
+    private var treeIdx = 2
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -114,8 +117,10 @@ class FootprintFragment : Fragment(), SensorEventListener {
         if (copy != null) pedometer_percentage.setCompletedPerentage(copy / currentStepGoal)
     }
 
-    private fun updateFootprint(result: List<Model.Result>) {
-
+    private fun updateFootprint(result: Model.Result) {
+        val trees = arrayOf(R.drawable.cactus_6_dead, R.drawable.cactus_5_sick, R.drawable.cactus_1, R.drawable.cactus_2, R.drawable.cactus_3, R.drawable.cactus_4)
+        treeIdx = min(max(treeIdx + result.delta, 0), trees.size - 1)
+        image_tree.setImageDrawable(context?.getDrawable(trees[treeIdx]))
     }
 
     private fun showError(error: String?) = Toast.makeText(context, error, Toast.LENGTH_SHORT).show()

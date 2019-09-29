@@ -13,8 +13,8 @@ interface ApiService {
     @GET("/carbon_footprint")
     fun status(): Observable<Model.Result>
 
-    @GET("/demo_carbon_footprint")
-    fun demo_data(): Observable<List<Model.Result>>
+    @GET("/demo2_carbon_footprint")
+    fun demo_data(): Observable<Model.Result>
 
     companion object {
         fun create() : ApiService {
