@@ -1,5 +1,7 @@
 package com.carbonconciousness.app
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.hardware.Sensor
@@ -41,9 +43,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val fab: FloatingActionButton = findViewById(R.id.fab)
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
+        fab.setOnClickListener { view -> run {
+                val builder = AlertDialog.Builder(this@MainActivity)
+                builder.setTitle(R.string.step_counting_explained)
+                builder.setMessage(R.string.pedometer_explanation)
+                builder.setPositiveButton("Got it!") {dialog, which ->  dialog.dismiss()}
+                builder.create().show()
+            }
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)

@@ -14,4 +14,6 @@
     <string name="step_count">%1$.0f/%2$.0f\nsteps</string>
     <string name="notification_channel">com.carbonforest.app</string>
     <string name="notification_description">Carbon Forest Notification Channel</string>
+    <string name="pedometer_explanation">Climate agreements are giving us a guideline about the amount of carbon that we should spend in our household. Energy spent in a household can easily be measured by IoT-devices. This data is connected to your the pedometer in your smartphone. Any overspent carbon will result in a higher daily step target.</string>
+    <string name="step_counting_explained">Step Counting Explained</string>
 </resources>
